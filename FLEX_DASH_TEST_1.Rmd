@@ -1,0 +1,59 @@
+---
+title: "Nomogram"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    theme: 
+      version: 4
+      bootswatch: cyborg
+runtime: shiny
+
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(readxl)
+library(dplyr)
+library(plotly)
+library(lubridate)
+library(DataEditR)
+library(formattable)
+library(DT)
+library(bslib)
+
+
+
+
+
+```
+
+## Column {data-width="400"}
+
+### SP
+
+```{r}
+
+
+fileData_RTPD <- shiny::reactiveFileReader(10000, 
+                               NULL, 
+                               "C:/R/Dash1/CSV/REACTIVE/DASH_JOIN_NOMOGRAM.csv", 
+                               read.csv)
+
+DT::renderDataTable({
+    DT::datatable(fileData_RTPD(),
+                 rownames = FALSE,
+                 options = list(paging = FALSE,    ## paginate the output
+                 pageLength = 40,  
+                 scrollX = FALSE,   
+                 scrollY = FALSE,  
+                 autoWidth = TRUE,
+                 dom = 't'))
+})
+
+
+
+```
+
+
+

@@ -1,0 +1,86 @@
+---
+title: "Nomogram"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: scroll
+    theme: 
+      version: 4
+      bootswatch: cyborg
+runtime: shiny
+
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(readxl)
+library(dplyr)
+library(plotly)
+library(lubridate)
+library(DataEditR)
+library(formattable)
+library(DT)
+library(bslib)
+
+
+
+
+
+```
+
+
+Row {data-height=1100}
+-------------------------------------
+
+### NG SHADOW PRICES
+
+```{r}
+
+
+fileData_NOMOGRAM <- shiny::reactiveFileReader(10000, 
+                               NULL, 
+                               "C:/R/Dash1/CSV/REACTIVE/DASH_JOIN_NOMOGRAM.csv", 
+                               read.csv)
+
+DT::renderDataTable({
+    DT::datatable(fileData_NOMOGRAM (),
+                 rownames = FALSE,
+                 options = list(paging = FALSE,    ## paginate the output
+                 pageLength = 40,  
+                 scrollX = FALSE,   
+                 scrollY = FALSE,  
+                 autoWidth = TRUE,
+                 dom = 't'))
+})
+
+
+
+```
+
+Row {data-height=400}
+-------------------------------------
+
+### TIE SHADOW PRICES
+
+```{r}
+
+
+fileData_TIE <- shiny::reactiveFileReader(10000, 
+                               NULL, 
+                               "C:/R/Dash1/CSV/REACTIVE/DASH_JOIN_INTERTIE.csv", 
+                               read.csv)
+
+DT::renderDataTable({
+    DT::datatable(fileData_TIE(),
+                 rownames = FALSE,
+                 options = list(paging = FALSE,    ## paginate the output
+                 pageLength = 40,  
+                 scrollX = FALSE,   
+                 scrollY = FALSE,  
+                 autoWidth = TRUE,
+                 dom = 't'))
+})
+
+
+
+```
